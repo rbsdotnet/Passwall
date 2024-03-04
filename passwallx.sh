@@ -12,19 +12,11 @@ echo "Running as root..."
 sleep 2
 clear
 
-
-uci set network.wan.peerdns="0"
-
-uci set network.wan.dns='8.8.8.8 8.8.4.4'
-
 uci set system.@system[0].zonename='Asia/Tehran'
+
 uci set system.@system[0].timezone='<+0330>-3:30'
 
 uci commit system
-
-uci commit network
-
-uci commit
 
 /sbin/reload_config
 
@@ -86,8 +78,6 @@ sleep 3
 opkg install luci-app-passwall
 sleep 3
 opkg remove dnsmasq
-sleep 2
-opkg install dnsmasq-full
 sleep 3
 opkg install ipset
 sleep 2
@@ -107,10 +97,27 @@ opkg install iptables-mod-tproxy
 sleep 2
 opkg install kmod-ipt-nat
 sleep 2
-opkg install kmod-nft-socket
+opkg install dnsmasq-full
 sleep 2
-opkg install kmod-nft-tproxy
+opkg install shadowsocks-libev-ss-local
 sleep 2
+opkg install shadowsocks-libev-ss-redir
+sleep 2
+opkg install shadowsocks-libev-ss-server
+sleep 2
+opkg install shadowsocksr-libev-ssr-local
+sleep 2
+opkg install shadowsocksr-libev-ssr-redir
+sleep 2
+opkg install simple-obfs
+sleep 2
+opkg install boost-system
+sleep 2
+opkg install boost-program_options
+sleep 2
+opkg install libstdcpp6 
+sleep 2
+opkg install boost 
 
 >/etc/banner
 
@@ -252,7 +259,6 @@ uci set passwall.@global_forwarding[0].tcp_redir_ports='1:65535'
 uci set passwall.@global[0].remote_dns='8.8.4.4'
 uci set passwall.@global[0].dns_mode='udp'
 uci set passwall.@global[0].udp_node='tcp'
-uci set passwall.@global[0].remote_dns='8.8.4.4'
 
 uci commit passwall
 
@@ -274,8 +280,7 @@ uci set wireless.default_radio0.network='lan'
 
 uci commit wireless
 
-uci set dhcp.@dnsmasq[0].rebind_domain='www.ebanksepah.ir 
-my.irancell.ir'
+dhcp.@dnsmasq[0].rebind_domain='www.ebanksepah.ir' 'my.irancell.ir'
 
 uci commit
 
